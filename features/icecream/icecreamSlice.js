@@ -1,7 +1,9 @@
+const { cakeActions } = require("../cake/cakeSlice")
+
 const createSlice = require("@reduxjs/toolkit").createSlice
 
 const initialState = {
-  numOfIcecream: 10,
+  numOfIcecream: 20,
 }
 
 const icecreamSlice = createSlice({
@@ -14,6 +16,18 @@ const icecreamSlice = createSlice({
     restocked: (state, action) => {
       state.numOfIcecream += action.payload
     },
+  },
+  // one way of accessing reducer from different file
+  // extraReducers: {
+  //   ["cake/ordered"]: (state) => {
+  //     state.numOfIcecream--
+  //   },
+  // },
+
+  extraReducers: (builder) => {
+    builder.addCase(cakeActions.ordered, (state) => {
+      state.numOfIcecream--
+    })
   },
 })
 
